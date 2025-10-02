@@ -1,0 +1,12 @@
+form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 30%;
+    margin: auto;
+    border:1px solid rgba(0, 0, 0, 0.418);
+    border-radius: 20px;
+    box-shadow: 0 0 20px cyan,
+                0 0 20px cyan;
+}
