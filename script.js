@@ -38,7 +38,6 @@ const getButton = document.getElementById("getButton");
 const listAll = document.getElementById("listAll");
 
 getButton.addEventListener("click", displayList);
-
 async function displayList(event) {
     event.preventDefault();
     const url = "https://usersapi.osinachi.me/users";
@@ -52,8 +51,20 @@ async function displayList(event) {
 
         data.forEach(user => {
             const li = document.createElement("li");
-            li.textContent = `firstname: ${user.first_name}, lastname: ${user.last_name}, email: ${user.email}`;
-            
+            li.textContent = `firstname: ${user.first_name}, lastname: ${user.last_name}, email: ${user.email} `;
+
+            // delete icon
+            const deleteIcon = document.createElement("i");
+            deleteIcon.className = "fa-solid fa-trash";
+            deleteIcon.addEventListener("click", async () => {
+                try {
+                    await fetch(`${url}/${user.id}`, { method: "DELETE" });
+                    li.remove();
+                } catch (err) {
+                    console.error("Error deleting user:", err);
+                }
+            });
+            li.appendChild(deleteIcon);
             ul.appendChild(li);
         });
 
