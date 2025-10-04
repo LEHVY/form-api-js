@@ -53,6 +53,16 @@ async function displayList(event) {
             const li = document.createElement("li");
             li.textContent = `firstname: ${user.first_name}, lastname: ${user.last_name}, email: ${user.email} `;
 
+
+            //edit icon
+            // const editIcon = document.createElement("i")
+            // editIcon.className ="fas fa-pen"
+            // editIcon.addEventListener("click", async() => {
+            //     try{
+            //        await fetch(`${url}/${user.id}`, {method: "PATCH"})
+            //     }
+            // })
+
             // delete icon
             const deleteIcon = document.createElement("i");
             deleteIcon.className = "fa-solid fa-trash";
