@@ -2,139 +2,117 @@ const firstName = document.getElementById("firstname");
 const lastName = document.getElementById("lastname");
 const email = document.getElementById("email");
 const submit = document.getElementById("submitButton");
+const userDetails = document.getElementById("userDetails");
+const modal = document.getElementById("editModal");
+const firstnameModal = document.getElementById("firstname_modal");
+const lastnameModal = document.getElementById("lastname_modal");
+const emailModal = document.getElementById("email_modal");
+const updateButton = document.getElementById("updateButton");
+const cancelButton = document.getElementById("cancelButton")
+const url = "https://usersapi.osinachi.me/users";
 
-submit.style.color = "red";
-
-// POST METHOD
+// add user
 submit.addEventListener("click", async (event) => {
-    event.preventDefault();
-
-    const url = "https://usersapi.osinachi.me/users";
-
-    try {
-        let res = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                first_name: firstName.value,
-                last_name: lastName.value,
-                email: email.value
-            })
-        });
-
-        let data = await res.json();
-        alert("User uploaded successfully!");
-        console.log(data);
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Error uploading user");
-    }
+  event.preventDefault();
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        first_name: firstName.value,
+        last_name: lastName.value,
+        email: email.value
+      })
+    });
+    alert("User added!");
+    firstName.value = "";
+    lastName.value = "";
+    email.value = "";
+    displayList();
+  } catch (error) {
+    console.error("Error adding user:", error);
+  }
 });
 
-// GET METHOD
-const getButton = document.getElementById("getButton");
-const userDetails = document.getElementById("userDetails");
+//upload users by default
+window.onload = displayList;
 
-getButton.addEventListener("click", displayList);
+async function displayList() {
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    userDetails.innerHTML = "";
 
-async function displayList(event) {
-    event.preventDefault();
-    const url = "https://usersapi.osinachi.me/users";
+    data.forEach(user => {
+      const li = document.createElement("li");
 
-    try {
-        const res = await fetch(url);
-        const data = await res.json();
-        userDetails.innerHTML = "";
+      const firstSpan = document.createElement("span");
+      firstSpan.textContent = user.first_name;
 
-        const ul = document.createElement("ul");
+      const secondSpan = document.createElement("span");
+      secondSpan.textContent = user.last_name;
 
-        data.forEach(user => {
-            const li = document.createElement("li");
+      const emailSpan = document.createElement("span");
+      emailSpan.textContent = user.email;
 
-            const firstSpan = document.createElement("span");
-            firstSpan.className = "firstname";
-            firstSpan.textContent = user.first_name;
+      const actionsSpan = document.createElement("span");
 
-            const secondSpan = document.createElement("span");
-            secondSpan.className = "secondname";
-            secondSpan.textContent = user.last_name;
+      // Edit icon
+      const editIcon = document.createElement("i");
+      editIcon.className = "fas fa-pen";
+      editIcon.style.color = "#6c757d";
+      editIcon.style.cursor = "pointer";
+      editIcon.addEventListener("click", () => {
+        modal.style.display = "flex";
+        firstnameModal.value = user.first_name;
+        lastnameModal.value = user.last_name;
+        emailModal.value = user.email;
 
-            const emailSpan = document.createElement("span");
-            emailSpan.className = "email";
-            emailSpan.textContent = user.email;
-
-
-            const actionsSpan = document.createElement("span");
-            actionsSpan.className = "actions";
-
-
-            // EDITICON
-            const editIcon = document.createElement("i");
-            editIcon.className = "fas fa-pen"
-            editIcon.style.color = "#6c757d"
-            editIcon.style.cursor = "pointer"
-            editIcon.addEventListener("click", async () => {
-                submit.innerHTML = 'UPDATE <i class="fas fa-check"></i>';
-                firstName.value = user.first_name;
-                lastName.value = user.last_name;
-                email.value = user.email;
-                submit.onclick = async (event) => {
-                    event.preventDefault();
-                    try {
-                        const res = await fetch(`${url}/${user.id}`, {
-                            method: "PATCH",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                first_name: firstName.value,
-                                last_name: lastName.value,
-                                email: email.value
-                            })
-                        });
-                        const data = await res.json();
-                        console.log("Updated user:", data);
-                        alert("User updated successfully!");
-                        // Refresh
-                        displayList(event);
-                        submit.innerHTML = 'Add <i class="fas fa-add"></i>';
-                    } catch (error) {
-                        console.error("Edit failed:", error);
-                        alert("Edit failed");
-                    }
-                };
+        updateButton.onclick = async (e) => {
+          e.preventDefault();
+          try {
+            await fetch(`${url}/${user.id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                first_name: firstnameModal.value,
+                last_name: lastnameModal.value,
+                email: emailModal.value
+              })
             });
-            //delete icon
-            const deleteIcon = document.createElement("i");
-            deleteIcon.className = "fas fa-trash";
-            deleteIcon.style.color = "red"
-            deleteIcon.style.cursor = "pointer";
-            deleteIcon.style.paddingLeft ="22px"
-            deleteIcon.addEventListener("click", async () => {
-                try {
-                    await fetch(`${url}/${user.id}`, { method: "DELETE" });
-                    li.remove();
-                } catch (err) {
-                    console.error("Error deleting user:", err);
-                }
-            });
+            alert("User updated!");
+            modal.style.display = "none";
+            displayList();
+          } catch (error) {
+            console.error("Error updating user:", error);
+          }
+        };
+      });
+      cancelButton.onclick = (e) => {
+        e.preventDefault();
+        modal.style.display ="none"
+      }
 
+      // delete icon
+      const deleteIcon = document.createElement("i");
+      deleteIcon.className = "fas fa-trash";
+      deleteIcon.style.color = "red";
+      deleteIcon.style.cursor = "pointer";
+      deleteIcon.style.marginLeft = "15px";
+      deleteIcon.addEventListener("click", async () => {
+        try {
+          await fetch(`${url}/${user.id}`, { method: "DELETE" });
+          li.remove();
+        } catch (err) {
+          console.error("Error deleting user:", err);
+        }
+      });
 
-            actionsSpan.appendChild(editIcon);
-            actionsSpan.appendChild(deleteIcon);
-
-
-            li.append(firstSpan, secondSpan, emailSpan, actionsSpan);
-            ul.appendChild(li);
-        });
-
-        userDetails.appendChild(ul);
-
-    } catch (error) {
-        console.error("Error:", error);
-        userDetails.innerHTML = "Error getting users";
-    }
+      actionsSpan.append(editIcon, deleteIcon);
+      li.append(firstSpan, secondSpan, emailSpan, actionsSpan);
+      userDetails.appendChild(li);
+    });
+  } catch (error) {
+    console.error("Error getting users:", error);
+  }
 }
-
