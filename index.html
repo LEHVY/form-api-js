@@ -20,11 +20,20 @@
         <input id="email" type="email"
             placeholder="Email"><br><br>
         <button id="submitButton"
-            type="submit">Submit</button>
-        <button id="getButton">list</button>
-        <button id="getButton"></button>
+            type="submit">Add <i class="fas fa-add"></i></button>
+        <button id="getButton">List <i class="fas fa-clipboard"></i> </button>
+        <button id="getButton">Refresh <i class="fas fa-refresh"></i></button>
+        <!-- <button id="getButton"></button> -->
     </form>
-    <div id="listAll"></div>
+    <div id="listAll">
+        <ul class="listOfUsersHeader">
+            <li>First Name</li>
+            <li>Second Name</li>
+            <li>Email</li>
+            <li>Actions</li>
+        </ul>
+        <ul id="userDetails"><ul>
+    </div>
 
 </body>
 <script src="script.js"></script>
