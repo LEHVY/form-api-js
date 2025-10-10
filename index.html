@@ -1,42 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
   <title>User Management</title>
   <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
+<section class="header">
+</section>
 
 <body>
-  <form id="mainForm">
-    <input id="firstname" type="text" placeholder="First Name"><br><br>
-    <input id="lastname" type="text" placeholder="Last Name"><br><br>
-    <input id="email" type="email" placeholder="Email"><br><br>
-    <button id="submitButton" type="submit">Add <i class="fas fa-add"></i></button>
-  </form>
-
-  <div id="listAll">
-    <ul class="listOfUsersHeader">
-      <li>First Name</li>
-      <li>Second Name</li>
-      <li>Email</li>
-      <li>Actions</li>
-    </ul>
-    <ul id="userDetails"></ul>
+  <div class="form-blur"> 
   </div>
 
+    <form id="mainForm">
+
+      <input id="firstname" type="text"
+        placeholder="First Name"><br><br>
+      <input id="lastname" type="text"
+        placeholder="Last Name"><br><br>
+      <input id="email" type="email"
+        placeholder="Email"><br><br>
+      <button id="submitButton" type="submit">Add <i
+          class="fas fa-add"></i></button>
+    </form>
+
+
+
+  <div class="TABLE">
+
+    <section class="header">
+      <h1>List Of Users</h1>
+      <button class="displayForm" style="font-size: large;">
+        Add User <i class="fas fa-user-plus"></i></button>
+    </section>
+
+    <table class="listOfUsersTable">
+      <tr class="tableHeaders">
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </table>
+<div id="loading-users"><p> <i class="fas fa-spinner fa-spin"></i> <br> Getting users...</p></div>
+
+  </div>
   <div id="editModal" class="modal">
     <form class="modal_form" id="modal_form">
-      <input id="firstname_modal" class="inputmodal" type="text" placeholder="First Name"><br><br>
-      <input id="lastname_modal" class="inputmodal" type="text" placeholder="Last Name"><br><br>
-      <input id="email_modal" class="inputmodal" type="email" placeholder="Email"><br><br>
-      <button id="updateButton" type="submit">Update <i class="fas fa-check"></i></button>
-      <button id="cancelButton"style =  "color: red; background-color: yellow";>Cancel <i class="fas fa-x"></i></button>
+      <input id="firstname_modal" class="inputmodal"
+        type="text" placeholder="First Name"><br><br>
+      <input id="lastname_modal" class="inputmodal"
+        type="text" placeholder="Last Name"><br><br>
+      <input id="email_modal" class="inputmodal"
+        type="email" placeholder="Email"><br><br>
+      <button id="updateButton" type="submit">Update <i
+          class="fas fa-check"></i></button>
+      <button id="cancelButton"
+        style="color: red; background-color: yellow"
+        ;>Cancel <i class="fas fa-x"></i></button>
     </form>
   </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>

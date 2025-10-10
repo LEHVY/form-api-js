@@ -8,12 +8,34 @@ const firstnameModal = document.getElementById("firstname_modal");
 const lastnameModal = document.getElementById("lastname_modal");
 const emailModal = document.getElementById("email_modal");
 const updateButton = document.getElementById("updateButton");
-const cancelButton = document.getElementById("cancelButton")
+const cancelButton = document.getElementById("cancelButton");
 const url = "https://usersapi.osinachi.me/users";
+const displayForm = document.querySelector(".displayForm");
+const form = document.getElementById("mainForm")
+const formBlur = document.querySelector(".form-blur")
+const loadingUsers = document.getElementById("loading-users")
 
-// add user
+
+
+//Display form
+displayForm.onclick = () => {
+  form.style.display = "flex"
+  form.style.flexDirection = "column"
+  formBlur.style.display = "flex"
+}
+// Clear form
+formBlur.onclick = () => {
+  form.style.display = "none";
+  formBlur.style.display = "none";
+}
+
+// Add user
 submit.addEventListener("click", async (event) => {
   event.preventDefault();
+  //loading animation
+  loadingUsers.style.display = "flex"
+
+
   try {
     await fetch(url, {
       method: "POST",
@@ -24,7 +46,6 @@ submit.addEventListener("click", async (event) => {
         email: email.value
       })
     });
-    alert("User added!");
     firstName.value = "";
     lastName.value = "";
     email.value = "";
@@ -34,28 +55,31 @@ submit.addEventListener("click", async (event) => {
   }
 });
 
-//upload users by default
+// Load users when the page opens
 window.onload = displayList;
 
 async function displayList() {
+  loadingUsers.style.display = "flex"
   try {
     const res = await fetch(url);
     const data = await res.json();
-    userDetails.innerHTML = "";
+    const tableBody = document.querySelector(".listOfUsersTable");
+
+    // Clear previous rows except the header
+    tableBody.querySelectorAll(".tableRow").forEach(row => row.remove());
 
     data.forEach(user => {
-      const li = document.createElement("li");
+      const tr = document.createElement("tr");
+      tr.className = "tableRow";
 
-      const firstSpan = document.createElement("span");
-      firstSpan.textContent = user.first_name;
+      const tdFirstname = document.createElement("td");
+      const tdLastname = document.createElement("td");
+      const tdEmail = document.createElement("td");
+      const tdActions = document.createElement("td");
 
-      const secondSpan = document.createElement("span");
-      secondSpan.textContent = user.last_name;
-
-      const emailSpan = document.createElement("span");
-      emailSpan.textContent = user.email;
-
-      const actionsSpan = document.createElement("span");
+      tdFirstname.textContent = user.first_name;
+      tdLastname.textContent = user.last_name;
+      tdEmail.textContent = user.email;
 
       // Edit icon
       const editIcon = document.createElement("i");
@@ -80,7 +104,6 @@ async function displayList() {
                 email: emailModal.value
               })
             });
-            alert("User updated!");
             modal.style.display = "none";
             displayList();
           } catch (error) {
@@ -88,12 +111,14 @@ async function displayList() {
           }
         };
       });
+
+      // Cancel button
       cancelButton.onclick = (e) => {
         e.preventDefault();
-        modal.style.display ="none"
-      }
+        modal.style.display = "none";
+      };
 
-      // delete icon
+      // Delete icon
       const deleteIcon = document.createElement("i");
       deleteIcon.className = "fas fa-trash";
       deleteIcon.style.color = "red";
@@ -102,15 +127,20 @@ async function displayList() {
       deleteIcon.addEventListener("click", async () => {
         try {
           await fetch(`${url}/${user.id}`, { method: "DELETE" });
-          li.remove();
+          tr.remove();
+          alert("User Deleted")
         } catch (err) {
           console.error("Error deleting user:", err);
         }
       });
 
-      actionsSpan.append(editIcon, deleteIcon);
-      li.append(firstSpan, secondSpan, emailSpan, actionsSpan);
-      userDetails.appendChild(li);
+      tdActions.append(editIcon, deleteIcon);
+      tr.append(tdFirstname, tdLastname, tdEmail, tdActions);
+      tableBody.appendChild(tr);
+      formBlur.style.display = "none"
+      form.style.display = "none"
+      loadingUsers.style.display = "none"
+
     });
   } catch (error) {
     console.error("Error getting users:", error);
