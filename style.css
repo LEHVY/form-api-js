@@ -245,14 +245,31 @@ button:hover {
 
 
 @media (max-width: 500px) {
-    body {
-        color: red;
-    }
+
 
     .TABLE {
         overflow-x: scroll;
         scroll-behavior: smooth;
-        
+    }
+    #mainForm{
+        top: 40%;
+    }
+    .modal{
+        top: -15%;
+    }
+
+    .TABLE .header {
+        position: fixed;
 
     }
+
+    .TABLE .header h1{
+        margin-right: 30px;
+    }
+
+    .listOfUsersTable {
+        margin-top: 70px;
+    }
+
+
 }
