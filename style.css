@@ -63,7 +63,7 @@ input {
 }
 
 input::placeholder {
-    color: rgba(255, 255, 255, 0.774);
+    color: #ffffffc5;
 
 }
 
@@ -101,7 +101,7 @@ button:hover {
 
 .list-title {
     color: #d2b48c;
-    font-size: 24px;
+    font-size: 240px;
     margin-bottom: 10px;
     text-decoration: underline;
 }
