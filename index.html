@@ -1,75 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
-  <title>User Management</title>
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+    content="width=device-width, initial-scale=1.0" />
+  <title>Form Tailwind</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<section class="header">
-</section>
 
-<body>
-  <div class="form-blur">
+<body
+  class="bg-[#1a1a1a] text-[#f5deb3] flex flex-col items-center p-5 z-5">
+
+  <div
+    class="form-blur hidden fixed w-full h-full backdrop-blur-[3px] bg-[rgba(0,0,0,0.658)]">
   </div>
 
-  <form id="mainForm">
 
-    <input id="firstname" type="text"
+  <form id="mainForm"
+    class="flex bg-[#3e2723] p-5 rounded-[10px] shadow-[0_0_10px_#000] mb-5 w-[300px] h-[60vh] text-center fixed top-[70%] left-[60%] -translate-x-[50%] -translate-y-1/2 flex-col justify-center items-center z-10 backdrop-blur-[3px] max-[500px] top-[50%]:">
+    <input
+      class="w-[90%] p-[10px] my-[px] rounded-md border-none outline-none bg-[#2c2c2c] text-[#f5deb3] placeholder-[#ffffffc5] focus:bg-white focus:text-black focus:placeholder-black transition-all duration-300"
+      id="firstname" type="text"
       placeholder="First Name"><br><br>
-    <input id="lastname" type="text"
+
+    <input
+      class="w-[90%] p-[10px] my-[2px] rounded-md border-none outline-none bg-[#2c2c2c] text-white placeholder-white focus:bg-white focus:text-black focus:placeholder-black transition-all duration-300"
+      id="lastname" type="text"
       placeholder="Last Name"><br><br>
-    <input id="email" type="email"
-      placeholder="Email"><br><br>
-    <button id="submitButton" type="submit">Add <i
-        class="fas fa-add"></i></button>
+
+    <input
+      class="w-[90%] p-[10px] my-[2px] rounded-md border-none outline-none bg-[#2c2c2c] text-white placeholder-white focus:bg-white focus:text-black focus:placeholder-black transition-all duration-300"
+      id="email" type="email" placeholder="Email"><br><br>
+
+    <button id="submitButton" type="submit"
+      class="mt-3 px-4 py-2 bg-[rgb(179,179,5)] text-white font-semibold rounded-md hover:bg-[#a0522d] transition-all duration-300">
+      Add <i class="fas fa-add"></i>
+    </button>
   </form>
 
-
-
-  <div class="TABLE">
-
-    <section class="header">
-      <h1>List Of Users</h1>
-      <button class="displayForm" style="font-size: large;">
-        Add User <i class="fas fa-user-plus"></i></button>
+  <div class="TABLE max-w-full m-[5%] max-[500px]:overflow-x-scroll max-[500px]:scroll-smooth">
+    <section
+      class="header flex justify-between items-center mb-4 max-[500px]:fixed">
+      <h1
+        class="text-3xl font-semibold underline decoration-[#d2b48c] max-[500px]:mr-[30px]">
+        List Of Users</h1>
+      <button
+        class="displayForm text-lg bg-[#8b4513] text-white px-4 py-2 rounded-md hover:bg-[#a0522d] transition">
+        Add User <i class="fas fa-user-plus"></i>
+      </button>
     </section>
 
-    <table class="listOfUsersTable">
-      <tr class="tableHeaders">
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Actions</th>
+    <table
+      class="listOfUsersTable w-auto max-w-full border-2 border-[#8b4513] bg-[#2e2e2e] max-[500px]:mt-[60px]">
+      <tr class="tableHeaders text-[1.5rem] font-semibold">
+        <th
+          class="p-2">
+          Firstname</th>
+        <th
+          class="p-2">
+          Lastname</th>
+        <th
+          class="p-2">
+          Email</th>
+        <th class="border-b border-[#8b4513] p-2">Actions
+        </th>
       </tr>
     </table>
-    <div id="loading-users">
-      <p> <i class="fas fa-spinner fa-spin"></i> <br>
-        Getting users...</p>
-    </div>
 
+    <div id="loading-users"
+      class="hidden flex-col text-center text-[1.5rem] font-semibold text-[rgba(255,255,255,0.65)] fixed z-[16] left-[45%] mt-[10px] max-[500px]:left-[30%]">
+      <p><i class="fas fa-spinner fa-spin"></i><br>Getting
+        users...</p>
+    </div>
   </div>
-  <div id="editModal" class="modal">
-    <form class="modal_form" id="modal_form">
-      <input id="firstname_modal" class="inputmodal"
+
+  <!-- Edit Modal -->
+  <div id="editModal"
+    class="modal hidden fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.7)] justify-center items-center z-[1] backdrop-blur-[2px] max-[500px]:-top-[5%]">
+    <form
+      class="modal_form bg-[#ffffff] text-white p-5 rounded-[10px] shadow-[0_0_10px_#000] w-[300px] text-center">
+      <input id="firstname_modal"
+        class="inputmodal w-[90%] p-[10px] my-[5px] border border-dashed border-[rgba(0,0,0,0.7)] rounded-md outline-none bg-[#2c2c2c] text-[#f5deb3]"
         type="text" placeholder="First Name"><br><br>
-      <input id="lastname_modal" class="inputmodal"
+      <input id="lastname_modal"
+        class="inputmodal w-[90%] p-[10px] my-[5px] border border-dashed border-[rgba(0,0,0,0.7)] rounded-md outline-none bg-[#2c2c2c] text-[#f5deb3]"
         type="text" placeholder="Last Name"><br><br>
-      <input id="email_modal" class="inputmodal"
+      <input id="email_modal"
+        class="inputmodal w-[90%] p-[10px] my-[5px] border border-dashed border-[rgba(0,0,0,0.7)] rounded-md outline-none bg-[#2c2c2c] text-[#f5deb3]"
         type="email" placeholder="Email"><br><br>
-      <button id="updateButton" type="submit">Update <i
-          class="fas fa-check"></i></button>
+      <button id="updateButton" type="submit"
+        class="bg-[#8b4513] text-white px-4 py-2 rounded-md hover:bg-[#a0522d] transition">
+        Update <i class="fas fa-check"></i>
+      </button>
       <button id="cancelButton"
-        style="color: red; background-color: yellow"
-        ;>Cancel <i class="fas fa-x"></i></button>
+        class="ml-2 px-4 py-2 bg-yellow-400 text-red-600 font-semibold rounded-md hover:bg-yellow-500 transition">
+        Cancel <i class="fas fa-x"></i>
+      </button>
     </form>
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>

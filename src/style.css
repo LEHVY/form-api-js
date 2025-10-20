@@ -1,0 +1,36 @@
+@import "tailwindcss";
+.tableHeaders th {
+    border-right: 1px solid #8b4513;
+    border-bottom: 1px solid #8b4513;
+    padding: 10px;
+
+}
+.tableHeaders th:last-child {
+    border-right: none;
+
+}
+
+.listOfUsersTable .tableRow td {
+    font-family: 'Times New Roman';
+    font-size: 1.4rem;
+    padding: 10px;
+    text-align: center;
+
+
+
+}
+
+.tableRow td {
+    border-right: 1px DASHED #8b4513;
+    border-bottom: 1px solid #8b4513;
+
+}
+
+.tableRow:last-child td {
+    border-bottom: none;
+}
+
+.tableRow td:last-child {
+    border-right: none;
+
+}

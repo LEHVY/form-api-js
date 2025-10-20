@@ -1,3 +1,4 @@
+import './style.css'
 const firstName = document.getElementById("firstname");
 const lastName = document.getElementById("lastname");
 const email = document.getElementById("email");
